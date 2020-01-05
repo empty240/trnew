@@ -35,11 +35,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->mapApiTrRoutes();	
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -57,17 +55,29 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+    * TR,WR共通APIルーティング
+    *	
+    * @return void	
+    */	
+    protected function mapApiRoutes()	
+    {	
+    Route::middleware('api')	
+        ->prefix('api')	
+        ->namespace($this->namespace)	
+        ->group(base_path('routes/api.php'));	
+    }
+
+    /**	
+    * TR用APIルーティング
+    *	
+    * @return void	
+    */	
+    protected function mapApiTrRoutes()	
+    {	
+        Route::domain(config('const.env.tr_domain'))
+        ->middleware('api')	
+        ->prefix('api')	
+        ->namespace('App\Http\Controllers\Tr')	
+        ->group(base_path('routes/api_tr.php'));	
     }
 }

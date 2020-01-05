@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::domain(config('const.env.tr_domain'))->group(function () {
+    Route::get('/{any}', function () {
+        return view('app_tr');
+    })->where(['any' => '.*']);
 });

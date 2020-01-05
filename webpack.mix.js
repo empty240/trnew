@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js("resources/js/app.js", "public/js").sass(
+    "resources/sass/app.scss",
+    "public/css"
+);
+
+mix.copy(
+    "node_modules/medium-editor/dist/css/medium-editor.css",
+    "public/css/medium-editor.css"
+);
+mix.copy(
+    "node_modules/medium-editor/dist/css/themes/default.css",
+    "public/css/medium-editor-default-theme.css"
+);
+test;
