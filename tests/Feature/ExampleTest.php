@@ -14,7 +14,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('http://' . config('const.env.tr_domain'));
+        $response = $this->get($this->trDomain);
 
         $response->assertStatus(200);
     }

@@ -28,42 +28,16 @@ class ArticleRepository
      * 公開記事の取得
      * @param int|null $status
      * @param int|null $category
-     * @param int|null $articleType
-     * @param string|null $format
-     * @param string|null $keywords
-     * @param string|null $publishWriter
-     * @param bool|null $isNoIndex
-     * @param bool|null $isPr
-     * @param bool|null $isStealth
-     * @param bool|null $isNoPager
-     * @param bool|null $isHideAd
-     * @param bool|null $isDisplayMateForm
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function fetchPaginatorPublished(
+    public function fetchPaginator(
         ?int $status = null,
-        ?int $category = null,
-        ?int $articleType = null,
-        ?string $format = null,
-        ?string $keywords = null,
-        ?string $publishWriter = null,
-        ?bool $isNoIndex = false,
-        ?bool $isPr = false,
-        ?bool $isStealth = false,
-        ?bool $isNoPager = false,
-        ?bool $isHideAd = false,
-        ?bool $isDisplayMateForm = false
+        ?int $category = null
     ): LengthAwarePaginator {
-        // キーワードは半角スペースで分割してand検索にする
-        $keywords = array_filter(explode(' ', $keywords));
-
         $articles = Article
             ::with([
-                'articleType',
                 'category',
-                'writer',
-                'publishWriter',
-                'rewrite',
+                'writer'
             ])
             ->when($status, function ($query) use ($status) {
                 $query->where('status', $status);
@@ -71,54 +45,8 @@ class ArticleRepository
             ->when($category, function ($query) use ($category) {
                 $query->where('category_id', $category);
             })
-            ->when($articleType, function ($query) use ($articleType) {
-                $query->where('article_type_id', $articleType);
-            })
-            ->when($format, function ($query) use ($format) {
-                if ($format === Format::RICH()->getValue()) {
-                    $query->where('is_rich', true);
-                } elseif ($format === Format::VIDEO()->getValue()) {
-                    $query->where('is_video', true);
-                } else {
-                    $query->where('is_rich', false);
-                    $query->where('is_video', false);
-                }
-            })
-            ->when(! empty($keywords), function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->where(function ($query) use ($keyword) {
-                        $query->where('id', (int) $keyword);
-                        $query->orWhere('title', 'like', '%'.$keyword.'%');
-                    });
-                }
-            })
-            ->when($publishWriter, function ($query) use ($publishWriter) {
-                $query->whereHas('publishWriter', function ($query) use ($publishWriter) {
-                    $query->where('screen_name', $publishWriter);
-                });
-            })
-            ->where(function ($query) use ($isNoIndex, $isPr, $isStealth, $isNoPager, $isHideAd, $isDisplayMateForm) {
-                $query->when($isNoIndex, function ($query) {
-                    $query->where('is_noindex', true);
-                });
-                $query->when($isPr, function ($query) {
-                    $query->Where('is_pr', true);
-                });
-                $query->when($isStealth, function ($query) {
-                    $query->Where('is_stealth', true);
-                });
-                $query->when($isNoPager, function ($query) {
-                    $query->Where('is_nopager', true);
-                });
-                $query->when($isHideAd, function ($query) {
-                    $query->Where('is_hide_ad', true);
-                });
-                $query->when($isDisplayMateForm, function ($query) {
-                    $query->Where('is_display_mate_form', true);
-                });
-            })
             ->orderBy('published_at', 'desc')
-            ->paginate(config('const.paginate.default_loading_column'));
+            ->paginate(5);
 
         return $articles;
     }
