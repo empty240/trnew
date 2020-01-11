@@ -1,8 +1,6 @@
 {
     "private": true,
     "scripts": {
-        "eslint-fix": "./node_modules/.bin/eslint resources/js --ext=.vue --ext=.js --fix",
-        "eslint": "./node_modules/.bin/eslint resources/js --ext=.vue --ext=.js",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -12,37 +10,13 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "axios": "^0.18",
+        "axios": "^0.19",
         "cross-env": "^5.1",
-        "eslint": "^5.14.1",
-        "eslint-config-vue": "^2.0.2",
-        "eslint-plugin-vue": "^5.0.0-beta.6",
-        "laravel-mix": "^4.0.14",
+        "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
-        "node-sass": "^4.11.0",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.17.2",
+        "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.8"
-    },
-    "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^12.1.0",
-        "@ckeditor/ckeditor5-vue": "^1.0.0-beta.1",
-        "@pderas/vue2-geocoder": "^1.0.2",
-        "clipboard": "^2.0.4",
-        "element-ui": "^2.4.9",
-        "js-file-download": "^0.4.4",
-        "moment": "^2.24.0",
-        "normalize.css": "^8.0.1",
-        "sanitize-html": "^1.20.0",
-        "tiptap": "^1.26.4",
-        "tiptap-extensions": "^1.28.4",
-        "vue-clipboard2": "^0.3.0",
-        "vue-router": "^3.0.1",
-        "vue2-google-maps": "^0.10.6",
-        "vue2-medium-editor": "^1.1.6",
-        "vuedraggable": "^2.18.1",
-        "vuex": "^3.0.1"
+        "vue-template-compiler": "^2.6.11"
     }
 }
