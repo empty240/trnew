@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWritersTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateWritersTable extends Migration
      */
     public function up()
     {
-        // ライターに削除という概念はない
-        Schema::create('writers', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('writer_name', 20)->unique();
-            $table->integer('status');
+            $table->string('tag_name', 16);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateWritersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('writers');
+        Schema::dropIfExists('tags');
     }
 }
